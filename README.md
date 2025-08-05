@@ -12,7 +12,7 @@ To execute the project you must have:
 - [Python 3.11](https://www.python.org/downloads/release/python-3110/)
 - [Google Gemini API Key](https://aistudio.google.com/apikey)
 
-### How to get API Key from Google Gemini
+### 🔑 How to get API Key from Google Gemini
 
 1. Access the official website: [Google AI](https://ai.google.dev/)
 2. In the menu, go to **Solutions** and select **Gemini API**.
