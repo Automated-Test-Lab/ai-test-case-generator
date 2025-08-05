@@ -38,8 +38,8 @@ To execute the project you must have:
 
    ```
    GEMINI_API_KEY=your_gemini_api_key
-   URL_API=https://petstore.swagger.io/#/
-   URL_UI=https://demos.bellatrix.solutions/
+   URL_API=your_url_swagger
+   URL_UI=your_url_system
    ```
 
 - Run scripts:
