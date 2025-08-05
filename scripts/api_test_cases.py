@@ -16,8 +16,8 @@ def main():
     """
     Função principal para gerar arquivos .feature e .spec.ts a partir de uma URL.
     """
-    prompt_feature = os.getenv("PROMPT_FEATURE", "Considerando que você é um Engenheiro de Automação Software especializado em testes de API, gere um arquivo .feature (Gherkin) com os cenários básicos, alternativos e de exceção dos endpoints.")
-    prompt_spec = os.getenv("PROMPT_SPEC", "Considerando que você é um Engenheiro de Automação Software especializado em testes de API, gere um arquivo Playwright .spec.ts com testes bem estrututrados de API.")
+    prompt_feature = os.getenv("PROMPT_FEATURE", "Considerando que você é um Engenheiro de Automação Software especializado em testes de API, gere um arquivo .feature (Gherkin) com os cenários básicos, alternativos e de exceção dos endpoints encontrado na documentação em swagger fornecido pela {url_API}.")
+    prompt_spec = os.getenv("PROMPT_SPEC", "Considerando que você é um Engenheiro de Automação Software especializado em testes de API, gere um arquivo Playwright .spec.ts com testes bem estrututrados de API da documentação em swagger fornecido pela {url_API}.")
 
     if not url_API:
         raise ValueError("A variável de ambiente URL_API deve estar definida.")
@@ -29,14 +29,16 @@ def main():
         print("Não foi possível obter o conteúdo da URL. Encerrando.")
         return
 
+    formatted_prompt_feature = prompt_feature.format(url_API=url_API)
     print("Gerando cenários em Gherkin para o arquivo .feature...")
-    feature_content = generate_content(prompt_feature, conteudo_da_url)
+    feature_content = generate_content(formatted_prompt_feature, conteudo_da_url)
     create_feature_file("api_test_cases.feature", feature_content)
 
     print("\n---")
 
+    formatted_prompt_spec = prompt_spec.format(url_API=url_API)
     print("Gerando casos de testes em Playwright para o arquivo .spec.ts...")
-    spec_content = generate_content(prompt_spec, conteudo_da_url)
+    spec_content = generate_content(formatted_prompt_spec, conteudo_da_url)
     create_spec_file("api_test_cases.spec.ts", spec_content)
 
 if __name__ == "__main__":

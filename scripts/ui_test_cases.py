@@ -16,8 +16,8 @@ def main():
     """
     Função principal para gerar arquivos .feature e .spec.ts a partir de uma URL.
     """
-    prompt_feature = os.getenv("PROMPT_FEATURE", "Considerando que você é um Engenheiro de Automação Software especializado em testes de UI, gere um arquivo .feature (Gherkin) com os cenários básicos, alternativos e de exceção")
-    prompt_spec = os.getenv("PROMPT_SPEC", "Considerando que você é um Engenheiro de Automação Software especializado em testes de UI, gere um arquivo Playwright .spec.ts com testes bem estrututrados E2E.")
+    prompt_feature = os.getenv("PROMPT_FEATURE", "Considerando que você é um Engenheiro de Automação Software especializado em testes de UI, gere um arquivo .feature (Gherkin) com os cenários básicos, alternativos e de exceção da aplicação fornecida pela {url_UI}")
+    prompt_spec = os.getenv("PROMPT_SPEC", "Considerando que você é um Engenheiro de Automação Software especializado em testes de UI, gere um arquivo Playwright .spec.ts com testes bem estrututrados E2E da aplicação fornecida pela {url_UI}")
    
     if not url_UI:
         raise ValueError("A variável de ambiente URL_UI deve estar definida.")
@@ -28,15 +28,17 @@ def main():
     if not conteudo_da_url:
         print("Não foi possível obter o conteúdo da URL. Encerrando.")
         return
-
+    
+    formatted_prompt_feature = prompt_feature.format(url_UI=url_UI)
     print("Gerando cenários em Gherkin para o arquivo .feature...")
-    feature_content = generate_content(prompt_feature, conteudo_da_url)
+    feature_content = generate_content(formatted_prompt_feature, conteudo_da_url)
     create_feature_file("ui_test_cases.feature", feature_content)
 
     print("\n---")
 
+    formatted_prompt_spec = prompt_spec.format(url_UI=url_UI)
     print("Gerando casos de testes em Playwright para o arquivo .spec.ts...")
-    spec_content = generate_content(prompt_spec, conteudo_da_url)
+    spec_content = generate_content(formatted_prompt_spec, conteudo_da_url)
     create_spec_file("ui_test_cases.spec.ts", spec_content)
 
 if __name__ == "__main__":
